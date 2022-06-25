@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Image Tracking AR</title>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- iOS has a lot of restrictions on playing videos in the browser. 
+  To play an inline video texture, we must set the meta tag. 
+  A-Frame will inject this if missing.-->
+  <meta name="apple-mobile-web-app-capable"  content="yes" />
+  
+
+  <!-- import aframe and then ar.js with image tracking / location based features -->
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  <script src="./play-on-click.js"></script>
+  
+  
+  <!-- style for the loader -->
+  <style>
+    .arjs-loader{
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #000;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+   .arjs-loader div {
+     text-align: center;
+     font-size: 2.25em;
+     color: #fff ;
+   }
+    .lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    }
+    .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #dfc;
+    border-color: #dfc transparent #dfc transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+    0% {
+    transform: rotate(0deg);
+    }
+    100% {
+    transform: rotate(360deg);
+    }
+    }
+  </style>
+
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+  <!-- minimal loader shown until image descriptors are loaded. 
+    Loading may take a while according to the device computational power -->
+    <div class="arjs-loader">
+      <div>Loading ... <div class="lds-dual-ring"></div></div>
+    </div>
+
+  <!-- a-frame scene -->
+  <a-scene  vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embeded arjs="trackingMethod:best;sourceType:webcam;debugUIEnabled:false">
+
+    <a-assets>
+      <video src="./video.mp4" id="video-1" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline autoplay></video>
+    </a-assets>
+
+    <a-nft id="nft1" type="nft" url="pro167\images" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5" >
+      <a-video id="vid1" src="#video-1" width="600" height="900" position="0 0 -30" rotation="-90 0 0" play-on-click ></a-video>
+    </a-nft>
+
+    <a-entity camera id="camera" position="0 0 10">
+    </a-entity> 
+
+  
+  </a-scene>
+
+</body>
+
+</html>
